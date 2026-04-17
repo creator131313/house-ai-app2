@@ -20,7 +20,7 @@ This project predicts house prices using machine learning.
 4. User inputs → prediction output
 
 ## 🌍 Live Demo
-https://house-ai-app2.onrender.com
+https://house-ai-app2.onrender.com/docs
 
 ## 📌 Author
 Sanika
