@@ -1,5 +1,5 @@
 from fastapi.responses import FileResponse
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 import joblib
 import pandas as pd
 
