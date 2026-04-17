@@ -1,3 +1,4 @@
+from fastapi.responses import FileResponse
 from fastapi import FastAPI
 import joblib
 import pandas as pd
@@ -8,7 +9,7 @@ model = joblib.load("house_model.pkl")
 
 @app.get("/")
 def home():
-    return {"message": "AI House Price Predictor API is running 🚀"}
+    return FileResponse("index.html")
 
 @app.post("/predict")
 def predict(data: dict):
