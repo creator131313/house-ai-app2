@@ -51,8 +51,9 @@ function App() {
       });
 
       const json = await res.json();
+      console.log(json);
 
-      if (json.predicted_price) {
+      if (json.predicted_price !== undefined) {
         setResult("💰 Estimated Price: $" + json.predicted_price);
       } else {
         setResult("❌ " + json.error);
