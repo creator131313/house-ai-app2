@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI House Price Predictor</title>
+  <title>AI House Predictor</title>
 
-  <!-- React -->
+  <!-- React via CDN -->
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-  <!-- Babel -->
+  <!-- Babel (to run JSX) -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body style="background: #f5f7fa;">
+<body style="font-family: Arial; padding: 40px;">
 
 <div id="root"></div>
 
@@ -22,20 +19,23 @@
 
 function App() {
   const [form, setForm] = React.useState({
-    MedInc: "", HouseAge: "", AveRooms: "", AveBedrms: "",
-    Population: "", AveOccup: "", Latitude: "", Longitude: ""
+    MedInc: "",
+    HouseAge: "",
+    AveRooms: "",
+    AveBedrms: "",
+    Population: "",
+    AveOccup: "",
+    Latitude: "",
+    Longitude: ""
   });
 
   const [result, setResult] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
   };
 
   const predict = async () => {
-    setLoading(true);
-
     const data = Object.fromEntries(
       Object.entries(form).map(([k, v]) => [k, parseFloat(v)])
     );
@@ -53,7 +53,7 @@ function App() {
       const json = await res.json();
 
       if (json.predicted_price) {
-        setResult("💰 Estimated Price: $" + json.predicted_price);
+        setResult("💰 $" + json.predicted_price);
       } else {
         setResult("❌ " + json.error);
       }
@@ -61,43 +61,27 @@ function App() {
     } catch {
       setResult("⚠️ API Error");
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="container mt-5">
+    <div>
+      <h1>🏠 AI House Price Predictor</h1>
 
-      <div className="card shadow p-4">
-        <h2 className="text-center mb-4">🏠 AI House Price Predictor</h2>
-
-        <div className="row">
-          {Object.keys(form).map((key) => (
-            <div className="col-md-6 mb-3" key={key}>
-              <input
-                className="form-control"
-                name={key}
-                placeholder={key}
-                value={form[key]}
-                onChange={handleChange}
-              />
-            </div>
-          ))}
+      {Object.keys(form).map((key) => (
+        <div key={key}>
+          <input
+            name={key}
+            placeholder={key}
+            value={form[key]}
+            onChange={handleChange}
+          />
         </div>
+      ))}
 
-        <div className="text-center">
-          <button className="btn btn-primary px-4" onClick={predict}>
-            {loading ? "Predicting..." : "Predict"}
-          </button>
-        </div>
+      <br />
+      <button onClick={predict}>Predict</button>
 
-        {result && (
-          <div className="alert alert-success mt-4 text-center">
-            {result}
-          </div>
-        )}
-      </div>
-
+      <h2>{result}</h2>
     </div>
   );
 }
