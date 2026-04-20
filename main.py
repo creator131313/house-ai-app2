@@ -27,8 +27,7 @@ def home():
     return FileResponse("index.html")
 
 @app.post("/predict")
-#def predict(data: dict, x_api_key: str = Header(None)):
-def predict(data: dict):
+def predict(data: dict, x_api_key: str = Header(None)):
 
     # AUTH CHECK
     verify_key(x_api_key)
